@@ -25,7 +25,7 @@ public class Executor {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     private List<Task> tasks = new ArrayList<>();
 
     public void addTask(Task task) {
@@ -38,7 +38,7 @@ public class Executor {
                 .findFirst().orElse(null);
         if (task != null) {
             this.tasks.remove(task);
-            //task.getExecutors().remove(this);
+
         }
     }
 

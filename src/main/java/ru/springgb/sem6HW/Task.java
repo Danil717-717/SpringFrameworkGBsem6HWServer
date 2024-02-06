@@ -43,7 +43,7 @@ public class Task {
     @UpdateTimestamp
     private LocalDateTime completionTime;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
             name = "execute_task",
             joinColumns = @JoinColumn(name = "task_id"),
