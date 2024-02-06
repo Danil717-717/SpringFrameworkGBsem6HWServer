@@ -1,7 +1,6 @@
 package ru.springgb.sem6HW.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +27,15 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task createTask(Task task) {
         return taskRepository.save(task);
+    }
+
+    @Override
+    public Task createExecutorForTask(Long id, Executor executor) {
+        Executor executorNew = save(executor);
+        Task taskNew = getTaskById(id);
+        taskNew.addExecutor(executorNew);
+        return taskRepository.save(taskNew);
+
     }
 
     @Override
@@ -83,7 +91,7 @@ public class TaskServiceImpl implements TaskService {
     public Task assignExecutor(Long id, Long executorId) {
         Task task = getTask(id);
         Executor executor = getExecutor(executorId);
-        task.addexecutor(executor);
+        task.addExecutor(executor);
         return taskRepository.save(task);
     }
 
@@ -123,6 +131,21 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Executor save(Executor executor){
         return repository.save(executor);
+    }
+
+    @Override
+    public void removingTaskFromExecutor(Long executorId, Long taskId) {
+        Executor executor = findByIdExecutor(executorId);
+        executor.removeTask(taskId);
+        save(executor);
+
+    }
+
+    @Override
+    public void removingExecutorFromTask(Long taskId, Long executorId) {
+        Task task = getTaskById(taskId);
+        task.removeExecutor(executorId);
+        save(task);
     }
 
     @Override

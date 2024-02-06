@@ -1,17 +1,12 @@
 package ru.springgb.sem6HW.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.springgb.sem6HW.Executor;
 import ru.springgb.sem6HW.Task;
-import ru.springgb.sem6HW.repository.ExecutorRepository;
-import ru.springgb.sem6HW.repository.TaskRepository;
 import ru.springgb.sem6HW.service.ExecutorService;
 import ru.springgb.sem6HW.service.TaskService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,18 +34,11 @@ public class TaskController {
     }
 
 
-//    @PutMapping("/tasks/{id}/executors")
-//    public Task createTask(@PathVariable Long id,@RequestBody Executor executor) {
-//        Executor executor1 = taskService.save(executor);
-//        List<Executor> listEx = new ArrayList<>();
-//        listEx.add(executor1);
-//
-//        Task task1 = taskService.getTaskById(id);
-//        task1.addexecutor(executor1);
-//        task1.setExecutors(listEx);
-//        return task1;
-//
-//    }
+    @PutMapping("/tasks/{id}/executors")
+    public Task createExecutorForTask(@PathVariable Long id,@RequestBody Executor executor) {
+        return taskService.createExecutorForTask(id,executor);
+
+    }
 
     @PutMapping("/tasks/{id}/executors/{executorsid}")
     public Task addExecInTask(@PathVariable Long id,@PathVariable Long executorsid) {
@@ -92,6 +80,16 @@ public class TaskController {
     }
 
 
+    @GetMapping("/executor/{id}/tasks")
+    public List<Task> getTasksPoExecutors(@PathVariable Long id) {
+        return taskService.getTasksExecutor(id);
+    }
+
+    @GetMapping("/tasks/{id}/executor")
+    public List<Executor> getExecutorsByTask(@PathVariable Long id) {
+        return taskService.getExecutorsTask(id);
+    }
+
     @DeleteMapping("/tasks/{id}")
     public void deleteTask(@PathVariable Long id) {
         taskService.deleteById(id);
@@ -103,15 +101,15 @@ public class TaskController {
         executorService.deleteById(id);
     }
 
-
-    @GetMapping("/executor/{id}/tasks")
-    public List<Task> getTasksPoExecutors(@PathVariable Long id) {
-        return taskService.getTasksExecutor(id);
+    @DeleteMapping("/tasks/{id}/executors/{executorsId}")
+    public void deleteExecutorFromTask(@PathVariable Long id,@PathVariable Long executorsId) {
+        taskService.removingExecutorFromTask(id,executorsId);
     }
 
-    @GetMapping("/tasks/{id}/executor")
-    public List<Executor> getExecutorsByTask(@PathVariable Long id) {
-        return taskService.getExecutorsTask(id);
+
+    @DeleteMapping("/executors/{id}/tasks/{taskId}")
+    public void deleteTaskFromExecutor(@PathVariable Long id, @PathVariable Long taskId) {
+        taskService.removingTaskFromExecutor(id, taskId);
     }
 
 

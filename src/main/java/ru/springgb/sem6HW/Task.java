@@ -43,33 +43,21 @@ public class Task {
     @UpdateTimestamp
     private LocalDateTime completionTime;
 
-//    @ManyToMany(fetch=FetchType.LAZY)
-//    @JoinTable(
-//            name = "execute_by_task",
-//            joinColumns = @JoinColumn(name = "task_id"),
-//            inverseJoinColumns = @JoinColumn(name = "executor_id"))
-
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "execute_task",
             joinColumns = @JoinColumn(name = "task_id"),
             inverseJoinColumns = @JoinColumn(name = "executor_id"))
     private List<Executor> executors = new ArrayList<>();
 
-
-//    public Task(String description, Status status, LocalDateTime completionTime, List<Executor> executor) {
-//        this.description = description;
-//        this.status = status;
-//        this.completionTime = completionTime;
-//        this.executor = executor;
-//    }
-    public void addexecutor(Executor executor) {
+    public void addExecutor(Executor executor) {
         this.executors.add(executor);
 
     }
 
-    public void removeTag(long executorId) {
-        Executor executor = this.executors.stream().filter(t -> t.getId() == executorId).findFirst().orElse(null);
+    public void removeExecutor(long executorId) {
+        Executor executor = this.executors.stream().filter(t -> t.getId() == executorId)
+                .findFirst().orElse(null);
         if (executor != null) {
             this.executors.remove(executor);
             executor.getTasks().remove(this);

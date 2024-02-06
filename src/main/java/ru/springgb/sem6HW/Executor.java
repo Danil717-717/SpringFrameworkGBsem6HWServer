@@ -33,4 +33,13 @@ public class Executor {
 
     }
 
+    public void removeTask(long taskId) {
+        Task task = this.tasks.stream().filter(t -> t.getId() == taskId)
+                .findFirst().orElse(null);
+        if (task != null) {
+            this.tasks.remove(task);
+            //task.getExecutors().remove(this);
+        }
+    }
+
 }

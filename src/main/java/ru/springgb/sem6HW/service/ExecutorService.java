@@ -2,7 +2,6 @@ package ru.springgb.sem6HW.service;
 
 import org.springframework.stereotype.Service;
 import ru.springgb.sem6HW.Executor;
-import ru.springgb.sem6HW.Task;
 
 
 import java.util.List;

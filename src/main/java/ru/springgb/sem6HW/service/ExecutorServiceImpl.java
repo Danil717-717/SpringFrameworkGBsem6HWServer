@@ -3,7 +3,6 @@ package ru.springgb.sem6HW.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.springgb.sem6HW.Executor;
-import ru.springgb.sem6HW.Task;
 import ru.springgb.sem6HW.repository.ExecutorRepository;
 
 import java.util.List;
@@ -48,13 +47,4 @@ public class ExecutorServiceImpl implements ExecutorService {
         repository.deleteById(id);
     }
 
-//    @Override
-//    public Executor assignTask(Long id, Long taskId) {
-//        Executor existingExecutor = findById(id);
-//        Task task = taskService.getTaskById(taskId);
-//        List<Task> listTask = null;
-//        listTask.add(task);
-//        existingExecutor.setTasks(listTask);
-//        return existingExecutor;
-//    }
 }

@@ -3,6 +3,8 @@ package ru.springgb.sem6HW.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import ru.springgb.sem6HW.Executor;
 import ru.springgb.sem6HW.Task;
 
@@ -25,6 +27,8 @@ public interface TaskService {
     Task apdateTask(Task task);
     void deleteById(Long id);
 
+    Task createExecutorForTask(Long id, Executor executor);
+
     Task assignExecutor(Long id, Long executorId);
     Executor assignTask(Long id, Long taskId);
     List<Task> getTasksExecutor(Long id);
@@ -32,6 +36,9 @@ public interface TaskService {
     List<Executor> getExecutorsTask(Long id);
 
     Executor save(Executor executor);
+
+    void removingTaskFromExecutor(Long executorId, Long taskId);
+    void removingExecutorFromTask(Long taskId,Long executorId);
 
 
     Page<Task> findPaginated(int pageNo, int pageSize);
