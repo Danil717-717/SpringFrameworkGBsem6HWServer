@@ -1,0 +1,125 @@
+ДЗ сем5
+Условие:
+Вам предстоит создать приложение для управления списком задач с
+использованием Spring Boot и Spring Data JPA. Требуется реализовать следующие функции:
+
+1. Добавление задачи.
+2. Просмотр всех задач.
+3. Просмотр задач по статусу (например, "завершена", "в процессе", "не начата").
+4. Изменение статуса задачи.
+5. Удаление задачи.
+
+Структура задачи:
+
+- ID (автоинкрементное)
+- Описание (не может быть пустым)
+- Статус (одно из значений: "не начата", "в процессе", "завершена")
+- Дата создания (автоматически устанавливается при создании задачи)
+
+
+Домашнее задание сем6
+
+1) Выполнить задание к уроку 5
+2) Добавить сущность исполнитель
+3) Каждая задача может быть назначена на исполнителя
+4) Исполнителей задачи может быть несколько
+
+Дополнительное задание
+Релизовать автоматическое документирование API c помощью springdoc
+
+
+
+{
+  "description":"task1",
+  "status":"COMPLETED"
+}
+
+{
+  "name":"ex1"
+}
+
+/1/executors
+
+
+docker run --name tasksdb -e POSTGRES_DB=tasksdb -e POSTGRES_USER=task -e POSTGRES_PASSWORD=1234 -p 5432:5432 -d postgres
+
+Доп метод по Update с профиля таски
+    @RequestMapping(path = "/update/{id}", method = RequestMethod.POST)
+    private String updateTask(@PathVariable("id") Long id, @ModelAttribute Task task) {
+        task.setId(id);
+        taskService.apdateTask(task);
+        return "redirect:/tasks";
+    }
+
+HTML с профиля
+<div>
+        <form action="#"
+              th:action="@{/tasks/update/{id}(id=${task.id})}"
+              th:object="${task}"
+              method="post">
+            <label for="description">Description</label>
+            <input type="text" th:field="*{description}" id="description" placeholder="description">
+            <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+
+            <label for="status">Status</label>
+
+            <select name="status" id="status">
+                <option th:each="status : ${T(ru.springgb.sem5HW.Task.Status).values()}"
+                        th:value="${status}" th:text="${status}"></option>
+            </select>
+
+            <span th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></span>
+
+            <input type="submit" value="Update Task">
+        </form>
+    </div>
+
+
+//    @GetMapping("/updateTask/{id}")
+//    public String updateTask(@PathVariable(value = "id") Long id, Model model){
+//        Task task = taskService.getTaskById(id);
+//        //task.setId(id);
+//        model.addAttribute("task", task);
+//        return "updateTask";
+//    }
+
+
+<div th:if = "${totalPages > 1}">
+            <div class="row col-sm-10">
+                <div class="col-sm-2">
+                    Total Rows:[[${totalItems}]]
+                </div>
+                <div class="col-sm-1">
+                    <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                        <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}}" >[[${i}]]</a>
+                        <span th:unless="${currentPage != i}">[[${i}]]</span>
+                    </span>
+                </div>
+                <div class="col-sm-1">
+                    <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}" >Next</a>
+                    <span th:unless="${currentPage < totalPages}">Next</span>
+
+                </div>
+
+                <div class="col-sm-1">
+                    <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}}" >Last</a>
+                    <span th:unless="${currentPage < totalPages}">Last</span>
+
+                </div>
+            </div>
+
+        </div>
+
+
+         @Override
+            public Page<Task> findPaginated(int pageNo, int pageSize) {
+                Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+                return taskRepository.findAll(pageable);
+            }
+
+
+            <form action="#" th:action="@{/task/searchTask(param=${tasks?.getTaskStatus()})}" th:object="${task}" >
+                        <label for="title">Find Book by Title</label>
+                        <input type="text" id="title" name="title" th:value="${tasks?.getTaskStatus()}" placeholder="Task status"/>
+                        <input type="submit" value="Search"/>
+                    </form>
