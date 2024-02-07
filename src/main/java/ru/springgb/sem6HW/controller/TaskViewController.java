@@ -127,16 +127,16 @@ public class TaskViewController {
 
     /////добавление по id
 
-    @GetMapping("/executors/{id}/tasks/{taskId}")
-    public String addTaskForExecutor(@PathVariable Long id,@PathVariable Long taskId, Model model){
+    @GetMapping("/executors/add/{id}")
+    public String addTaskForExecutor(@PathVariable Long id, Model model){
         Executor executor = executorService.findById(id);
         model.addAttribute("executor", executor);
         return "addTasks";
     }
 
-    @PostMapping("/executors/{id}/tasks/{taskId}")
-    public String addTaskExecutor(@PathVariable Long id,@PathVariable Long taskId){
-        taskService.assignTask(id,taskId);
+    @PostMapping("/executors/add/tasks/{taskId}")
+    public String addTaskExecutor(@PathVariable Long taskId){
+//        taskService.assignTask(id,taskId);
         return "executorProfile";
     }
     ///////
