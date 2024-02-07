@@ -2,6 +2,7 @@ package ru.springgb.sem6HW;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,18 +11,18 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity()
+@Entity(name = "executors")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Executor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty
     @Column(nullable = false)
     private String name;
 

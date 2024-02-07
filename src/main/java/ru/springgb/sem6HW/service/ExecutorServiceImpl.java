@@ -43,6 +43,11 @@ public class ExecutorServiceImpl implements ExecutorService {
     }
 
     @Override
+    public Executor apdateExecutor(Executor executor) {
+        return repository.save(executor);
+    }
+
+    @Override
     public void deleteById(Long id) {
         repository.deleteById(id);
     }

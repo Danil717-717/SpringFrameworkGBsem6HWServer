@@ -11,7 +11,7 @@
     </div>
 
     <div>
-        <form class="addbut" th:method="GET" th:action="@{/tasks/new}" th:object="${task}">
+        <form class="addbut" th:method="GET" th:action="@{/index/tasks/new}" th:object="${task}">
         <input class="inputtask" type="submit" value="Add task"/></form>
     </div>
 
@@ -26,18 +26,20 @@
                 <th>Description</th>
                 <th>Status</th>
                 <th>CompletionTime</th>
+                <th>Executors</th>
                 <th>Actions</th>
                 <th>Delete</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="task:${tasks}">
-                <td><a class="linkId" th:href="@{/tasks/{id}(id=${task.id})}" th:text="${task.id}"></a></td>
+                <td><a class="linkId" th:href="@{/index/tasks/{id}(id=${task.id})}" th:text="${task.id}"></a></td>
                 <td th:text="${task.description}"></td>
                 <td th:text="${task.status}"></td>
                 <td th:text="${task.completionTime}"></td>
-                <td><a class="linkUpdate" th:href="@{/tasks/updateTask/{id}(id=${task.id})}" >Update</a></td>
-                <td><a class="linkDelete" th:href="@{/tasks/delete/{id}(id=${task.id})}">Delete</a></td>
+                <td th:text="${task.executors}"></td>
+                <td><a class="linkUpdate" th:href="@{/index/tasks/updateTask/{id}(id=${task.id})}" >Update</a></td>
+                <td><a class="linkDelete" th:href="@{/index/tasks/delete/{id}(id=${task.id})}">Delete</a></td>
             </tr>
             </tbody>
         </table>

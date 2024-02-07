@@ -10,7 +10,7 @@
 <div class="addtask">
 
     <h1>Update task</h1>
-    <form th:method="POST" th:action="@{/tasks/update/{id}(id=${task.id})}" th:object="${task}" >
+    <form th:method="POST" th:action="@{/index/tasks/update/{id}(id=${task.id})}" th:object="${task}" >
         <div class="descriptionform">
             <label for="description">Description</label>
             <input type="text" th:field="*{description}" id="description"></input>
@@ -20,7 +20,7 @@
         <div class="statusform">
             <label for="status">Status</label>
             <select name="status" id="status">
-                <option th:each="status : ${T(ru.springgb.sem5HW.Task.Status).values()}"
+                <option th:each="status : ${T(ru.springgb.sem6HW.Task.Status).values()}"
                         th:value="${status}" th:text="${status}"></option>
             </select>
 
